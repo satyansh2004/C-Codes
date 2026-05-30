@@ -14,6 +14,6 @@ Debug/
 Release/
 .vscode/ipch/
 .vscode/.cmaketools/
-
+./.vscode
 # Ignore local log or run files
 *.log
