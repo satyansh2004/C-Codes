@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define BUFFER_SIZE 5
 
@@ -19,6 +21,8 @@ int main()
         printf("\nChoose your option\n1 - Initialize Readings\n2 - Display Readings\n3 - Exit\n");
         printf("Your choice: ");
         scanf("%d", &choice);
+
+        srand(time(NULL));
 
         switch (choice)
         {
@@ -46,8 +50,8 @@ void init_sensor(TEMPRATURE_SENSOR *temp_sensor)
 {
     for (int i = 0; i < BUFFER_SIZE; i++)
     {
-        temp_sensor[i].temp = 10;
-        printf("Index: %d, Value: %d\n", i, temp_sensor[i].temp);
+        int random_sensor_readings = (rand() % 100) - 40;
+        temp_sensor[i].temp = random_sensor_readings;
     }
 }
 
