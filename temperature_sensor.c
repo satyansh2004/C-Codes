@@ -59,6 +59,6 @@ void display_readings(TEMPRATURE_SENSOR *temp_sensor)
 {
     for (int i = 0; i < BUFFER_SIZE; i++)
     {
-        printf("%d ", temp_sensor[i].temp);
+        printf("%dC ", temp_sensor[i].temp);
     }
 }
