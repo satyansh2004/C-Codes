@@ -5,17 +5,12 @@
 #include <stdlib.h>
 
 #define BUFFER_SIZE 10
-typedef enum
-{
-  NORMAL,
-  NOT_NORMAL
-} Health_state;
 
 typedef union
 {
   struct
   {
-    int32_t sensor_data;
+    int sensor_data;
   } Sensor;
 
   struct
@@ -25,7 +20,11 @@ typedef union
 
   struct
   {
-    Health_state current_health;
+    enum
+    {
+      NORMAL,
+      NOT_NORMAL
+    } Health_state;
   } Health;
 
 } Task;
@@ -44,40 +43,34 @@ int main()
   reciving_messages(&task_var);
   check_health(&task_var);
 
-  int32_t timer = 0;
+  int timer = 0;
   while (1)
   {
-    if (timer != 5 && timer != 10)
-    {
+    if (timer != 5 && timer != 10) {
       read_sensor_data(buffer);
-      for (int32_t i = 0; i < BUFFER_SIZE; i++)
-      {
-        printf("%d ", buffer[i].Sensor.sensor_data);
+      for (int i = 0; i < BUFFER_SIZE; i++) {
+        printf("%dC ", buffer[i].Sensor.sensor_data);
       }
       printf("\n");
-      sleep(1);
     }
 
-    if (timer == 5)
-    {
+    if (timer == 5) {
       reciving_messages(&task_var);
       printf("%s\n", task_var.Message.messages);
-      sleep(1);
     }
 
-    if (timer == 10)
-    {
+    if (timer == 10) {
       check_health(&task_var);
-      if (task_var.Health.current_health == 0) {
+      if (task_var.Health.Health_state == NORMAL){
         printf("NORMAL\n");
       }
-      else if (task_var.Health.current_health == 1) {
+      else if (task_var.Health.Health_state == NOT_NORMAL) {
         printf("NOT NORMAL\n");
       }
-      sleep(1);
       timer = 0;
     }
 
+    sleep(1);
     timer++;
   }
 
@@ -86,9 +79,9 @@ int main()
 
 void read_sensor_data(Task *buffer)
 {
-  for (int32_t i = 0; i < BUFFER_SIZE; i++)
+  for (int i = 0; i < BUFFER_SIZE; i++)
   {
-    int32_t random_sensor_data = (rand() % 100) - 10;
+    int random_sensor_data = (rand() % 100) - 10;
     buffer[i].Sensor.sensor_data = random_sensor_data;
   }
 }
@@ -101,12 +94,14 @@ void reciving_messages(Task *task_var)
 
 void check_health(Task *task_var)
 {
-  int32_t random_health_check = rand() % 2;
+  int random_health_check = rand() % 2;
 
-  if (random_health_check == NORMAL) {
-    task_var->Health.current_health = NORMAL;
-  }
-  else if (random_health_check == NOT_NORMAL) {
-    task_var->Health.current_health = NOT_NORMAL;
+  if (random_health_check == 0)
+  {
+    task_var->Health.Health_state = NORMAL;
+  } 
+  else if (random_health_check == 1)
+  {
+    task_var->Health.Health_state = NOT_NORMAL;
   }
 }
