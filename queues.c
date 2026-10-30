@@ -22,8 +22,11 @@ void pop();
 int main() {
 
   insertData(20);
-  insertData(30);
   insertData(40);
+  insertData(30);
+  insertData(50);
+  insertData(50);
+  insertData(30);
   insertData(50);
   display();
   printf("Peek: %d\n", peek());
@@ -103,7 +106,7 @@ bool isFull() {
     temp = temp->next;
   }
 
-  if (count >= 10) {
+  if (count >= MAX_SIZE) {
     return true;
   }
 
