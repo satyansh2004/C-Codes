@@ -18,6 +18,10 @@ void visit(char *data) {
     return;
   }
 
+  if (head != NULL && strcmp(head->site, data) == 0) {
+    return;
+  }
+
   _History *visited = malloc(sizeof(_History));
 
   if (!visited) {
@@ -84,6 +88,7 @@ _History *current_site() {
 void display_history();
 
 int main() {
+  visit("google.com");
   visit("google.com");
   visit("facebook.com");
   visit("youtube.com");
