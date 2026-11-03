@@ -88,15 +88,46 @@ _History *current_site() {
 void display_history();
 
 int main() {
-  visit("google.com");
-  visit("google.com");
-  visit("facebook.com");
-  visit("youtube.com");
-  display_history();
-  back(1);
-  visit("reddit.com");
-  display_history();
-  printf("%s", current_site()->site);
+  while(1) {
+    int options;
+
+    printf("Choose give options below\n");
+    printf("1 - Visit a site\n2 - Back\n3 - Display\n4 - Current Site\n5 - Exit\n");
+    printf("Enter option: ");
+    scanf("%d", &options);
+
+    switch (options) {
+      case 1: char visit_site[100];
+        getchar();
+        printf("\nEnter site url: ");
+        fgets(visit_site, 100, stdin);
+        visit_site[strcspn(visit_site, "\n")] = '\0';
+        visit(visit_site);
+        break;
+
+      case 2: int pages;
+        printf("No. of pgaes to go back: ");
+        scanf("%d", &pages);
+        back(pages);
+        break;
+
+      case 3: 
+        printf("\n");
+        display_history();
+        printf("\n");
+        break;
+
+      case 4: 
+        printf("\n");
+        printf("Current Site: %s\n", current_site()->site);
+        break;
+
+      case 5: return 1;
+
+      default: printf("Not valid\n");
+        break;
+    }
+  }
   return 0;
 }
 
