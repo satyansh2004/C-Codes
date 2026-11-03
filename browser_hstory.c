@@ -54,16 +54,14 @@ void back(int time_back) {
   _History *temp = head;
 
   if (time_back >= stack_size) {
-
-
     while(temp->next != NULL) {
       _History *curr = temp;
       temp = temp->next;
 
       if (stack_size > 1) {
         free(curr);
-        stack_size--;
       }
+        stack_size = stack_size - 1;
     }
 
     head = temp;
@@ -76,6 +74,7 @@ void back(int time_back) {
     _History *curr = temp;
     temp = temp->next;
     free(curr);
+    stack_size = stack_size - 1;
   }
 
   head = temp;
@@ -122,12 +121,15 @@ int main() {
         printf("Current Site: %s\n", current_site()->site);
         break;
 
-      case 5: return 1;
+      case 5: goto end;
 
       default: printf("Not valid\n");
         break;
     }
   }
+
+end:
+  printf("\n%d", stack_size);
   return 0;
 }
 
