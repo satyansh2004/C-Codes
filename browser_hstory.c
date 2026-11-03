@@ -57,13 +57,13 @@ void back(int time_back) {
 
 
     while(temp->next != NULL) {
+      _History *curr = temp;
+      temp = temp->next;
 
       if (stack_size > 1) {
-        free(temp);
+        free(curr);
         stack_size--;
       }
-
-      temp = temp->next;
     }
 
     head = temp;
